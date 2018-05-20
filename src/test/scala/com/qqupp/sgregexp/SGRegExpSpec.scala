@@ -1,9 +1,9 @@
-package com.qqupp.sregex
+package com.qqupp.sgregexp
 
-import com.qqupp.sregex.Syntax._
+import com.qqupp.sgregexp.Syntax._
 import org.scalatest._
 
-class SGRegexSpec extends WordSpecLike with Matchers {
+class SGRegExpSpec extends WordSpecLike with Matchers {
 
   "Empty" should {
     "match an empty sequence" in {

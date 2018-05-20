@@ -1,12 +1,12 @@
 package com.qqupp
 
-import com.qqupp.sregex.Syntax._
+import com.qqupp.sgregexp.Syntax._
 
-package object sregex {
+package object sgregexp {
 
-  def check[T](pattern: SGRegex[T], seq: Seq[T]): Boolean = {
+  def check[T](pattern: SGRegExp[T], seq: Seq[T]): Boolean = {
 
-    def _match(p: SGRegex[T], seq: List[T], k: List[T] => Boolean): Boolean =
+    def _match(p: SGRegExp[T], seq: List[T], k: List[T] => Boolean): Boolean =
       (p, seq) match {
         case (Empty, _)             => k(seq)
         case (Literal(t), t1 :: ts) => t == t1 && k(ts)

@@ -1,4 +1,4 @@
-# sgregex
+# sgregexp
 Scala Generic Regular Expression Library
 
 ### Overview
@@ -6,7 +6,7 @@ Scala Generic Regular Expression Library
 Normal [regular expressions](https://en.wikipedia.org/wiki/Regular_expression)
 allow you to validate sequences of characters.
 
-sgregex allows you to validate
+sgregexp allows you to validate
 any `Seq[T]` not only characters, the expression can be composed using literals
 of any type you want.
 
