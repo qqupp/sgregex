@@ -1,5 +1,6 @@
+package com.qqupp.sregex
+
 import com.qqupp.sregex.Syntax._
-import com.qqupp.sregex._
 import org.scalatest._
 
 class SGRegexSpec extends WordSpecLike with Matchers {
