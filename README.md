@@ -54,7 +54,7 @@ val myDSLRegExp =
 Or you can import the syntax module for concise syntax
 ```scala
 import com.qqupp.sgregexp.syntax._
-val myDSLRegExp : SGRegExp[MyDSL] = (A or B) and C(1) and D(false).star and B
+val myDSLRegExp: SGRegExp[MyDSL] = (A or B) and C(1) and D(false).star and B
 
 ```
 

@@ -42,7 +42,7 @@ class SyntaxSpec extends WordSpecLike with Matchers {
       sgRegExp shouldBe And(Literal(1), Literal(2))
     }
 
-    "support concatenation ADT" in {
+    "support concatenation ADT considering all the variances for types" in {
       sealed trait ADT
       case class A() extends ADT
       case class B() extends ADT
@@ -54,43 +54,43 @@ class SyntaxSpec extends WordSpecLike with Matchers {
       val aExpA: SGRegExp[A] = Literal(A())
       val aExpADT: SGRegExp[ADT] = Literal(A())
 
-      val bA: B = B()
+      val bB: B = B()
       val bAdt: ADT = B()
       val bExpB: SGRegExp[B] = Literal(B())
       val bExpADT: SGRegExp[ADT] = Literal(B())
 
-      val exp1: SGRegExp[ADT] = aA and bA
+      val exp1: SGRegExp[ADT] = aA and bB
       val exp2: SGRegExp[ADT] = aA and bAdt
-      //val exp3: SGRegExp[ADT] = aA and bExpB
-      //val exp4: SGRegExp[ADT] = aA and bExpADT
+      val exp3: SGRegExp[ADT] = aA and bExpB
+      val exp4: SGRegExp[ADT] = aA and bExpADT
 
-      val exp5: SGRegExp[ADT] = aAdt and bA
+      val exp5: SGRegExp[ADT] = aAdt and bB
       val exp6: SGRegExp[ADT] = aAdt and bAdt
       val exp7: SGRegExp[ADT] = aAdt and bExpB
       val exp8: SGRegExp[ADT] = aAdt and bExpADT
 
-      val exp9: SGRegExp[ADT]  = aExpA and bA
+      val exp9: SGRegExp[ADT]  = aExpA and bB
       val exp10: SGRegExp[ADT] = aExpA and bAdt
-      //val exp11: SGRegExp[ADT] = aExpA and bExpB
-      //val exp12: SGRegExp[ADT] = aExpA and bExpADT
+      val exp11: SGRegExp[ADT] = aExpA and bExpB
+      val exp12: SGRegExp[ADT] = aExpA and bExpADT
 
-      val exp13: SGRegExp[ADT] = aExpADT and bA
+      val exp13: SGRegExp[ADT] = aExpADT and bB
       val exp14: SGRegExp[ADT] = aExpADT and bAdt
       val exp15: SGRegExp[ADT] = aExpADT and bExpB
       val exp16: SGRegExp[ADT] = aExpADT and bExpADT
 
       exp1 shouldBe expected
       exp2 shouldBe expected
-      //exp3 shouldBe expected
-      //exp4 shouldBe expected
+      exp3 shouldBe expected
+      exp4 shouldBe expected
       exp5 shouldBe expected
       exp6 shouldBe expected
       exp7 shouldBe expected
       exp8 shouldBe expected
       exp9 shouldBe expected
       exp10 shouldBe expected
-      //exp11 shouldBe expected
-      //exp12 shouldBe expected
+      exp11 shouldBe expected
+      exp12 shouldBe expected
       exp13 shouldBe expected
       exp14 shouldBe expected
       exp15 shouldBe expected
