@@ -1,9 +1,8 @@
-package com.qqupp.sgregexp
+package com.github.qqupp.sgregexp
 
 import org.scalatest._
 import SGRegExp._
 import syntax._
-import language.postfixOps
 
 class SyntaxSpec extends WordSpecLike with Matchers {
 

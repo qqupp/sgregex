@@ -1,6 +1,6 @@
-package com.qqupp.sgregexp
+package com.github.qqupp.sgregexp
 
-import com.qqupp.sgregexp.SGRegExp._
+import SGRegExp._
 
 object syntax {
 

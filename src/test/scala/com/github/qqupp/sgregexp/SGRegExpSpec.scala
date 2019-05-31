@@ -1,6 +1,6 @@
-package com.qqupp.sgregexp
+package com.github.qqupp.sgregexp
 
-import com.qqupp.sgregexp.SGRegExp._
+import com.github.qqupp.sgregexp.SGRegExp._
 import org.scalatest._
 
 class SGRegExpSpec extends WordSpecLike with Matchers {

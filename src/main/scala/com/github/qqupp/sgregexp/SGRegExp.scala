@@ -1,4 +1,4 @@
-package com.qqupp.sgregexp
+package com.github.qqupp.sgregexp
 
 sealed abstract class SGRegExp[+T]
 object SGRegExp {
