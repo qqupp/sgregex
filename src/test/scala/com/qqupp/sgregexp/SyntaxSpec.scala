@@ -19,20 +19,21 @@ class SyntaxSpec extends WordSpecLike with Matchers {
     }
 
     "support left concatenation" in {
-      val left: SGRegExp[Int] =  1
+      val left: SGRegExp[Int] = 1
       val sgRegExp: SGRegExp[Int] = left and 2
       sgRegExp shouldBe And(Literal(1), Literal(2))
     }
 
     "support right concatenation" in {
-      val rigth: SGRegExp[Int] =  2
+      val rigth: SGRegExp[Int] = 2
       val sgRegExp: SGRegExp[Int] = 1 and rigth
       sgRegExp shouldBe And(Literal(1), Literal(2))
     }
 
     "support multiple concatenation left associative" in {
       val sgRegExp: SGRegExp[Int] = 1 and 2 and 3 and 4
-      sgRegExp shouldBe And(And(And(Literal(1), Literal(2)), Literal(3)), Literal(4))
+      sgRegExp shouldBe And(And(And(Literal(1), Literal(2)), Literal(3)),
+                            Literal(4))
     }
 
     "support concatenation between 2 sgRegExp with the same type" in {
@@ -42,12 +43,13 @@ class SyntaxSpec extends WordSpecLike with Matchers {
       sgRegExp shouldBe And(Literal(1), Literal(2))
     }
 
-    "support concatenation ADT considering all the variances for types" in {
+    "support concatenation and alternation ADT considering all the variances for types" in {
       sealed trait ADT
       case class A() extends ADT
       case class B() extends ADT
 
-      val expected: SGRegExp[ADT] = And(Literal(A()), Literal(B()))
+      val expectedAnd: SGRegExp[ADT] = And(Literal(A()), Literal(B()))
+      val expectedOr: SGRegExp[ADT] = Or(Literal(A()), Literal(B()))
 
       val aA: A = A()
       val aAdt: ADT = A()
@@ -69,7 +71,7 @@ class SyntaxSpec extends WordSpecLike with Matchers {
       val exp7: SGRegExp[ADT] = aAdt and bExpB
       val exp8: SGRegExp[ADT] = aAdt and bExpADT
 
-      val exp9: SGRegExp[ADT]  = aExpA and bB
+      val exp9: SGRegExp[ADT] = aExpA and bB
       val exp10: SGRegExp[ADT] = aExpA and bAdt
       val exp11: SGRegExp[ADT] = aExpA and bExpB
       val exp12: SGRegExp[ADT] = aExpA and bExpADT
@@ -79,22 +81,61 @@ class SyntaxSpec extends WordSpecLike with Matchers {
       val exp15: SGRegExp[ADT] = aExpADT and bExpB
       val exp16: SGRegExp[ADT] = aExpADT and bExpADT
 
-      exp1 shouldBe expected
-      exp2 shouldBe expected
-      exp3 shouldBe expected
-      exp4 shouldBe expected
-      exp5 shouldBe expected
-      exp6 shouldBe expected
-      exp7 shouldBe expected
-      exp8 shouldBe expected
-      exp9 shouldBe expected
-      exp10 shouldBe expected
-      exp11 shouldBe expected
-      exp12 shouldBe expected
-      exp13 shouldBe expected
-      exp14 shouldBe expected
-      exp15 shouldBe expected
-      exp16 shouldBe expected
+      List(exp1,
+           exp2,
+           exp3,
+           exp4,
+           exp5,
+           exp6,
+           exp7,
+           exp8,
+           exp9,
+           exp10,
+           exp11,
+           exp12,
+           exp13,
+           exp14,
+           exp15,
+           exp16)
+        .foreach(expr => expr shouldBe expectedAnd)
+
+      val exp17: SGRegExp[ADT] = aA or bB
+      val exp18: SGRegExp[ADT] = aA or bAdt
+      val exp19: SGRegExp[ADT] = aA or bExpB
+      val exp20: SGRegExp[ADT] = aA or bExpADT
+
+      val exp21: SGRegExp[ADT] = aAdt or bB
+      val exp22: SGRegExp[ADT] = aAdt or bAdt
+      val exp23: SGRegExp[ADT] = aAdt or bExpB
+      val exp24: SGRegExp[ADT] = aAdt or bExpADT
+
+      val exp25: SGRegExp[ADT] = aExpA or bB
+      val exp26: SGRegExp[ADT] = aExpA or bAdt
+      val exp27: SGRegExp[ADT] = aExpA or bExpB
+      val exp28: SGRegExp[ADT] = aExpA or bExpADT
+
+      val exp29: SGRegExp[ADT] = aExpADT or bB
+      val exp30: SGRegExp[ADT] = aExpADT or bAdt
+      val exp31: SGRegExp[ADT] = aExpADT or bExpB
+      val exp32: SGRegExp[ADT] = aExpADT or bExpADT
+
+      List(exp17,
+           exp18,
+           exp19,
+           exp20,
+           exp21,
+           exp22,
+           exp23,
+           exp24,
+           exp25,
+           exp26,
+           exp27,
+           exp28,
+           exp29,
+           exp30,
+           exp31,
+           exp32)
+        .foreach(expr => expr shouldBe expectedOr)
     }
 
     "support alternation" in {
@@ -103,20 +144,21 @@ class SyntaxSpec extends WordSpecLike with Matchers {
     }
 
     "support left alternation" in {
-      val left: SGRegExp[Int] =  1
+      val left: SGRegExp[Int] = 1
       val sgRegExp: SGRegExp[Int] = left or 2
       sgRegExp shouldBe Or(Literal(1), Literal(2))
     }
 
     "support right alternation" in {
-      val rigth: SGRegExp[Int] =  2
+      val rigth: SGRegExp[Int] = 2
       val sgRegExp: SGRegExp[Int] = 1 or rigth
       sgRegExp shouldBe Or(Literal(1), Literal(2))
     }
 
     "support multiple alternation left associative" in {
       val sgRegExp: SGRegExp[Int] = 1 or 2 or 3 or 4
-      sgRegExp shouldBe Or(Or(Or(Literal(1), Literal(2)), Literal(3)), Literal(4))
+      sgRegExp shouldBe Or(Or(Or(Literal(1), Literal(2)), Literal(3)),
+                           Literal(4))
     }
 
     "support alternation between 2 sgRegExp with the same type" in {
@@ -136,7 +178,6 @@ class SyntaxSpec extends WordSpecLike with Matchers {
       val sgRegExp: SGRegExp[Int] = expr.star
       sgRegExp shouldBe Kleene(Literal(1))
     }
-
 
     "simplify custom dsl expressions" in {
       sealed trait MyDSL extends Product with Serializable
@@ -160,8 +201,8 @@ class SyntaxSpec extends WordSpecLike with Matchers {
           Literal(B)
         )
 
-
-      val syntaxExpression: SGRegExp[MyDSL] = (A or B) and C(1) and D(false).star and B
+      val syntaxExpression: SGRegExp[MyDSL] =
+        (A or B) and C(1) and D(false).star and B
 
       syntaxExpression shouldBe expectedExpression
 
