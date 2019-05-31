@@ -49,10 +49,21 @@ val myDSLRegExp =
                ),
                Literal(B)
              )
+```
 
+Or you can import the syntax module for concise syntax
+```scala
+import com.qqupp.sgregexp.syntax._
+val myDSLRegExp: SGRegExp[MyDSL] = (A or B) and C(1) and D(false).star and B
+
+```
+
+```scala
 val sequenceToValidate = Seq(A, C(1), D(false), D(false), B)
 check(myDSLRegExp, sequenceToValidate)
 ```
+
+the check method returns true if the sequence to validate respect the given regular expression. 
 
 ### Copyright and License
 

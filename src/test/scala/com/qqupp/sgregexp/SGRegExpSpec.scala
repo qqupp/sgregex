@@ -1,6 +1,6 @@
 package com.qqupp.sgregexp
 
-import com.qqupp.sgregexp.Syntax._
+import com.qqupp.sgregexp.SGRegExp._
 import org.scalatest._
 
 class SGRegExpSpec extends WordSpecLike with Matchers {
@@ -98,7 +98,7 @@ class SGRegExpSpec extends WordSpecLike with Matchers {
       check(star, Seq(a, a, a, a)) shouldBe true
     }
 
-    "not match a sequence containing a non matchin pattern" in {
+    "not match a sequence containing a non matching pattern" in {
       check(star, Seq(b)) shouldBe false
       check(star, Seq(a, b)) shouldBe false
       check(star, Seq(a, b, a)) shouldBe false
@@ -115,7 +115,11 @@ class SGRegExpSpec extends WordSpecLike with Matchers {
       case class D(b: Boolean) extends MyDSL
 
       // (A|B)C1(Dfalse*)B
-      val regex = And(And(And(Or(Literal(A), Literal(B)), Literal(C(1))),
+      val regex = And(And(And(Or(
+                                Literal(A),
+                                Literal(B)
+                              ),
+                              Literal(C(1))),
                           Kleene(Literal(D(false)))),
                       Literal(B))
 
